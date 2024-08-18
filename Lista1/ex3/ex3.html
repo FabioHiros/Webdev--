@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Média Ponderada das Notas</title>
+</head>
+<body>
+    <form id="formulario">
+        <label for="grade1">Nota 1:</label>
+        <input type="number" step="0.01" name="grade1" id="grade1" required style="width: 40px; margin-right: 10px;">
+        <label for="weight1">Peso 1:</label>
+        <input type="number"  name="weight1" id="weight1" required style="width: 40px; margin-right: 10px;"><br><br>
+
+        <label for="grade2">Nota 2:</label>
+        <input type="number" step="0.01" name="grade2" id="grade2" required style="width: 40px; margin-right: 10px;">
+        <label for="weight2">Peso 2:</label>
+        <input type="number" name="weight2" id="weight2" required style="width: 40px; margin-right: 10px;"><br><br>
+        
+        <label for="grade3">Nota 3:</label>
+        <input type="number" step="0.01" name="grade3" id="grade3" required style="width: 40px; margin-right: 10px;">
+        <label for="weight3">Peso 3:</label>
+        <input type="number" name="weight3" id="weight3" required style="width: 40px; margin-right: 10px;"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+    
+    <div id="resultado"></div>
+
+    <script src="ex3.js"></script>
+</body>
+</html>

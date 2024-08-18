@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo da Média Final</title>
+</head>
+<body>
+    <h2>Cálculo da Média Final de uma Disciplina</h2>
+
+    <form id="gradeForm">
+        <div class="input-group">
+            <label for="nota1">Nota 1:</label>
+            <input type="number" name="nota" min="0" max="10"><br><br>
+            <label for="peso1">Peso 1:</label>
+            <input type="number" name="peso" min="1"><br><br>
+        </div>
+    </form>
+
+    <button onclick="adicionarNota()">Adicionar Nota</button>
+    <button type="button" onclick="calcularMedia()">Calcular Média</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function adicionarNota() {
+            const form = document.getElementById('gradeForm');
+            const groupCount = form.getElementsByClassName('input-group').length + 1;
+
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+
+            inputGroup.innerHTML = `
+                <label for="nota${groupCount}">Nota ${groupCount}:</label>
+                <input type="number" name="nota" min="0" max="10"><br><br>
+                <label for="peso${groupCount}">Peso ${groupCount}:</label>
+                <input type="number" name="peso" min="1"><br><br>
+            `;
+
+            form.appendChild(inputGroup);
+        }
+
+        function calcularMedia() {
+            const form = document.getElementById('gradeForm');
+            const formData = new FormData(form);
+
+            let somaPesos = 0;
+            let somaPonderada = 0;
+
+            const notas = formData.getAll('nota');
+            const pesos = formData.getAll('peso');
+
+            for (let i = 0; i < notas.length; i++) {
+                const nota = parseFloat(notas[i]);
+                const peso = parseInt(pesos[i]);
+
+                if (isNaN(nota) || nota < 0 || nota > 10 || isNaN(peso) || peso <= 0) {
+                    alert('As notas devem estar entre 0 e 10 e os pesos devem ser números inteiros positivos.');
+                    return;
+                }
+
+                somaPonderada += nota * peso;
+                somaPesos += peso;
+            }
+
+            const mediaPonderada = somaPonderada / somaPesos;
+
+            let classificacao;
+            if (mediaPonderada >= 9) {
+                classificacao = "Excelente";
+            } else if (mediaPonderada >= 7) {
+                classificacao = "Bom";
+            } else if (mediaPonderada >= 5) {
+                classificacao = "Regular";
+            } else {
+                classificacao = "Insuficiente";
+            }
+
+            document.getElementById('resultado').textContent = `A média ponderada do aluno é ${mediaPonderada.toFixed(2)}, sendo classificada como: ${classificacao}.`;
+        }
+    </script>
+</body>
+</html>

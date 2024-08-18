@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Pagamento</title>
+</head>
+<body>
+    <h1>Calculadora de Folha de Pagamento</h1>
+    <form id="folhaForm">
+        <label for="codigoFuncionario">Código do funcionário:</label>
+        <input type="number" id="codigoFuncionario" required><br><br>
+
+        <label for="horasTrabalhadas">Número de horas trabalhadas no mês:</label>
+        <input type="number" id="horasTrabalhadas" required><br><br>
+
+        <label for="turno">Turno de trabalho:</label>
+        <select id="turno" required>
+            <option value="M">Matutino</option>
+            <option value="V">Vespertino</option>
+            <option value="N">Noturno</option>
+        </select><br><br>
+
+        <label for="categoria">Categoria do funcionário:</label>
+        <select id="categoria" required>
+            <option value="F">Funcionário</option>
+            <option value="G">Gerente</option>
+        </select><br><br>
+
+        <label for="salarioMinimo">Valor do salário-mínimo:</label>
+        <input type="number" step="0.001" id="salarioMinimo" step="0.01" required><br><br>
+
+        <input type="submit" value="Calcular Salário">
+    </form>
+    <button onclick="calcula_total_salarios()">Total gasto com salário dos funcionários</button>
+    <p id="resultado"></p>
+    <p id="salarioTotal"></p>
+    <script src="ex5.js"></script>
+</body>
+</html>
