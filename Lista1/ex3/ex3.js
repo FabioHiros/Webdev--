@@ -28,8 +28,8 @@ form.addEventListener('submit', function(event) {
         {min:9.001,max:10, classificacao_aluno:'A'},
          {min:8.001, max:9, classificacao_aluno:'B'},
          {min:7.001, max:8, classificacao_aluno:'C'},
-         {min:6.001, max:7, classificacao_aluno:'E'},
-         {min:5.001, max:6, classificacao_aluno:'D'},
+         {min:6.001, max:7, classificacao_aluno:'D'},
+         {min:5.001, max:6, classificacao_aluno:'E'},
          {min:0, max:5, classificacao_aluno:'F'}
     ];
 

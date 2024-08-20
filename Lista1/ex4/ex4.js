@@ -10,7 +10,7 @@ function calcularFrete() {
     const numeroPecas = parseInt(document.getElementById('numeroPecas').value);
     const rastreamento = document.querySelector('input[name="rastreamento"]:checked').value;
     const regiao = parseInt(document.getElementById('regiao').value);
-    const distancia = parseInt(document.getElementById('distancia').value);
+    const distancia = parseFloat(document.getElementById('distancia').value);
 
     if (numeroPecas <=0){
         alert('Número Inválido de Peças!')
@@ -57,12 +57,12 @@ function calcularFrete() {
         valorFretePecas = valorFreteIniciais + valorFreteExcedente;
     }
 
-   
-    const valorCombustivel = distancia; // 1 litro por km
+   let valor_litro_combustível = 5
+    const valorCombustivel = distancia * valor_litro_combustível; // 1 litro por km
 
     
-    const valorTotal = rastreamento ==='S' ? valorFretePecas + taxaRastreamento: valorFretePecas ;
+    const valorTotal = rastreamento ==='S' ? valorFretePecas + taxaRastreamento + valorCombustivel: valorFretePecas + valorCombustivel ;
 
    
-    document.getElementById('resultado').innerText += `O valor total do frete é de R$ ${valorTotal.toFixed(2)}, incluindo  ${valorCombustivel.toFixed(2)} litros de combustível ${ rastreamento === 'S' ? `e R$ ${taxaRastreamento.toFixed(2)} pela taxa de rastreamento`:''}\n`;
+    document.getElementById('resultado').innerText += `O valor total do frete é de R$ ${valorTotal.toFixed(2)}, incluindo R$ ${valorCombustivel.toFixed(2)} para o combustível ${ rastreamento === 'S' ? `e R$ ${taxaRastreamento.toFixed(2)} pela taxa de rastreamento`:''}\n`;
 }
