@@ -1,0 +1,17 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+model HistoricoCompras {
+  id           Int       @id @default(autoincrement())
+  dataCompra   DateTime  @default(now())
+  quantidade   Int
+  produtoNome  String
+  fornecedorNome String
+}
+
