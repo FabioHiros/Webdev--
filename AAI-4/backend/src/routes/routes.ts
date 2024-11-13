@@ -6,7 +6,7 @@ const router = express.Router();
 
 router
     .route('/historico')
-    .get(historicoController.getLogs)
+    .get(historicoController.getLogsByProduct)
     .post(historicoController.createLog);
 
 export default router;

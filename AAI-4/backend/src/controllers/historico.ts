@@ -1,9 +1,10 @@
-import express, { Response, Request } from 'express';
+import { Request, Response } from 'express';
 import prisma from '../dbConnector';
 
 class HistoricoController {
-  public createLog = async (req: Request, res: Response) => {
-    const { produtoNome, fornecedorNome, quantidade } = req.body;
+  // Create a new history record
+  public createLog = async (request: Request, response: Response) => {
+    const { produtoNome, fornecedorNome, quantidade } = request.body;
 
     try {
       const historico = await prisma.historicoCompras.create({
@@ -13,21 +14,25 @@ class HistoricoController {
           quantidade,
         },
       });
-      res.status(201).json(historico);
+      response.status(201).json(historico);
     } catch (error) {
-      console.error("Error creating history record:", error);
-      res.status(500).json({ error: "Failed to add history record" });
+      console.error("Error creating record:", error);
+      response.status(500).json({ error: 'Failed to add history record' });
     }
   };
 
-  // Add a method to get all history records
-  public getLogs = async (req: Request, res: Response) => {
+  // Get all records for a specific product name
+  public getLogsByProduct = async (request: Request, response: Response) => {
+    const { produtoNome } = request.query;
+    console.log(request.query)
     try {
-      const historicoRecords = await prisma.historicoCompras.findMany();
-      res.json(historicoRecords);
+      const historicos = await prisma.historicoCompras.findMany({
+        where: { produtoNome: String(produtoNome) },
+      });
+      response.json(historicos);
     } catch (error) {
-      console.error("Error fetching history records:", error);
-      res.status(500).json({ error: "Failed to fetch history records" });
+      console.error("Error fetching history:", error);
+      response.status(500).json({ error: 'Failed to fetch history' });
     }
   };
 }

@@ -8,10 +8,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model HistoricoCompras {
-  id           Int       @id @default(autoincrement())
-  dataCompra   DateTime  @default(now())
-  quantidade   Int
-  produtoNome  String
-  fornecedorNome String
+  id             Int       @id @default(autoincrement())
+  dataCompra     DateTime  @default(now())
+  quantidade     Int
+  produtoNome    String    // Product name as a string (no relation to a product table)
+  fornecedorNome String    // Supplier name as a string
 }
 

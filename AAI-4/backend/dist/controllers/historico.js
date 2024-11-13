@@ -15,8 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dbConnector_1 = __importDefault(require("../dbConnector"));
 class HistoricoController {
     constructor() {
-        this.createLog = (req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { produtoNome, fornecedorNome, quantidade } = req.body;
+        // Create a new history record
+        this.createLog = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            const { produtoNome, fornecedorNome, quantidade } = request.body;
             try {
                 const historico = yield dbConnector_1.default.historicoCompras.create({
                     data: {
@@ -25,22 +26,25 @@ class HistoricoController {
                         quantidade,
                     },
                 });
-                res.status(201).json(historico);
+                response.status(201).json(historico);
             }
             catch (error) {
-                console.error("Error creating history record:", error);
-                res.status(500).json({ error: "Failed to add history record" });
+                console.error("Error creating record:", error);
+                response.status(500).json({ error: 'Failed to add history record' });
             }
         });
-        // Add a method to get all history records
-        this.getLogs = (req, res) => __awaiter(this, void 0, void 0, function* () {
+        // Get all records for a specific product name
+        this.getLogsByProduct = (request, response) => __awaiter(this, void 0, void 0, function* () {
+            const { produtoNome } = request.query;
             try {
-                const historicoRecords = yield dbConnector_1.default.historicoCompras.findMany();
-                res.json(historicoRecords);
+                const historicos = yield dbConnector_1.default.historicoCompras.findMany({
+                    where: { produtoNome: String(produtoNome) },
+                });
+                response.json(historicos);
             }
             catch (error) {
-                console.error("Error fetching history records:", error);
-                res.status(500).json({ error: "Failed to fetch history records" });
+                console.error("Error fetching history:", error);
+                response.status(500).json({ error: 'Failed to fetch history' });
             }
         });
     }

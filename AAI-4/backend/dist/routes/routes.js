@@ -8,6 +8,6 @@ const historico_1 = __importDefault(require("../controllers/historico"));
 const router = express_1.default.Router();
 router
     .route('/historico')
-    .get(historico_1.default.getLogs)
+    .get(historico_1.default.getLogsByProduct)
     .post(historico_1.default.createLog);
 exports.default = router;

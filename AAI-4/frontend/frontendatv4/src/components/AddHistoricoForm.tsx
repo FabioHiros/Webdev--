@@ -1,51 +1,58 @@
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createHistoricoCompras } from '../api/historicoApi';
+import { products, suppliers } from '../data/data';
 
 const AddHistoricoForm: React.FC = () => {
-  const [produtoNome, setProdutoNome] = useState('');
+  const [produtoNome, setProdutoNome] = useState(''); // Update to use produtoNome
   const [fornecedorNome, setFornecedorNome] = useState('');
   const [quantidade, setQuantidade] = useState(1);
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({ mutationFn:createHistoricoCompras, 
+  const mutation = useMutation({
+    mutationFn: createHistoricoCompras,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey:['historicoCompras']});
-      setProdutoNome('');
-      setFornecedorNome('');
+      queryClient.invalidateQueries({ queryKey: ['historicoCompras', produtoNome] });
+      // setFornecedorNome('');
       setQuantidade(1);
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutation.mutate({ produtoNome, fornecedorNome, quantidade });
+    if (produtoNome) {
+      mutation.mutate({ produtoNome, fornecedorNome, quantidade });
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Adicionar Histórico de Compras</h2>
+      <h2>Add Sales Record</h2>
       <div>
-        <label>Produto:</label>
-        <input
-          type="text"
-          value={produtoNome}
-          onChange={(e) => setProdutoNome(e.target.value)}
-          required
-        />
+        <label>Product:</label>
+        <select onChange={(e) => setProdutoNome(e.target.value)} required>
+          <option value="">-- Select Product --</option>
+          {products.map((product) => (
+            <option key={product.id} value={product.name}>
+              {product.name}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
-        <label>Fornecedor:</label>
-        <input
-          type="text"
-          value={fornecedorNome}
-          onChange={(e) => setFornecedorNome(e.target.value)}
-          required
-        />
+        <label>Supplier:</label>
+        <select onChange={(e) => setFornecedorNome(e.target.value)} required>
+          <option value="">-- Select Supplier --</option>
+          {suppliers.map((supplier) => (
+            <option key={supplier.id} value={supplier.name}>
+              {supplier.name}
+            </option>
+          ))}
+        </select>
       </div>
       <div>
-        <label>Quantidade:</label>
+        <label>Quantity:</label>
         <input
           type="number"
           value={quantidade}
@@ -54,7 +61,7 @@ const AddHistoricoForm: React.FC = () => {
           required
         />
       </div>
-      <button type="submit">Adicionar</button>
+      <button type="submit">Add</button>
     </form>
   );
 };
